@@ -2,6 +2,16 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/*
+ * Tegen de cube muur oplopen --> triggered een geluid
+ * Springen + geluid bij springen
+ * Locatie based --> music / soundscape
+ * over op werken met velocity en dan voetstappen --> randomized sound container, zodat we verschillende samples --> snelheid
+ */
+
+
+
+
 public class PlayerController : MonoBehaviour
 {
     public Transform head;
@@ -48,10 +58,15 @@ public class PlayerController : MonoBehaviour
             // vertical angle as a local rotation
             camera.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
         }
+        print(moveInput.y); 
         
         // move character 
         transform.position += transform.forward * moveInput.y * speed * Time.deltaTime;
         transform.position += transform.right * moveInput.x * speed * Time.deltaTime;
+        
+        // TODO - check position in World and update music if required
+        // NOTE - use the position for this, can we retrieve on top of which plane we stand  
+        
         
         /*
          * Another option is to transform the moveInput to worldSpace moveInput:
