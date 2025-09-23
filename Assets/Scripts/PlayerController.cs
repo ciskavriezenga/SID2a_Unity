@@ -19,11 +19,15 @@ public class PlayerController : MonoBehaviour
 {
     public Transform head;
     public Camera camera;
+    public CharacterAudio characterAudio;
+    
     public float mouseSentivity = 0.5f;
     public float speed = 0.0f;
     public float accelerationIntensity = 1.0f;
     public float jumpAmount = 35.0f;
     public float gravityScale = 10.0f;
+    
+    
     
     private Rigidbody rb;
     private Vector2 moveInput = new Vector2(0, 0);
@@ -34,7 +38,7 @@ public class PlayerController : MonoBehaviour
     private Boolean isJumping = false;
     private Boolean startJump = false;
     
-     
+    private 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -126,7 +130,7 @@ public class PlayerController : MonoBehaviour
         if (startJump)
         {
             print("STARTING JUMP");
-            // TODO - trigger jump sound
+            characterAudio.PlayJump();
             rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
             startJump = false;
             isJumping = true;
@@ -144,8 +148,12 @@ public class PlayerController : MonoBehaviour
    {
        if (collision.gameObject.tag == "WalkableSurface")
        {
-           isJumping = false;
-           // TODO trigger landing sound
+           if (isJumping)
+           {
+               isJumping = false;
+               characterAudio.PlayLand();
+           }
+           
        }
    }
 
@@ -166,7 +174,7 @@ public class PlayerController : MonoBehaviour
     {
         if (jumpValue.isPressed)
         {
-            if(isJumping == false) startJump = true; 
+            if(!isJumping) startJump = true; 
         }
     }
     // TODO - OnSprint, OnInteract, OnJump, OnAttack, ...  
