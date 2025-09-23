@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 208720603}
   m_Layer: 0
   m_Name: Plane_1
-  m_TagString: Untagged
+  m_TagString: WalkableSurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -395,7 +395,7 @@ GameObject:
   - component: {fileID: 536466367}
   m_Layer: 0
   m_Name: Plane_2
-  m_TagString: Untagged
+  m_TagString: WalkableSurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -641,7 +641,7 @@ GameObject:
   - component: {fileID: 1203218646}
   m_Layer: 0
   m_Name: Plane_4
-  m_TagString: Untagged
+  m_TagString: WalkableSurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -775,6 +775,8 @@ MonoBehaviour:
   mouseSentivity: 0.5
   speed: 40
   accelerationIntensity: 20
+  jumpAmount: 70
+  gravityScale: 10
 --- !u!114 &1230757306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -981,8 +983,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1230757304}
   serializedVersion: 5
-  m_Mass: 60
-  m_LinearDamping: 0.05
+  m_Mass: 2
+  m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1122,7 +1124,7 @@ GameObject:
   - component: {fileID: 1739456591}
   m_Layer: 0
   m_Name: Plane_3
-  m_TagString: Untagged
+  m_TagString: WalkableSurface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

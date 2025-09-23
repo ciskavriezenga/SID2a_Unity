@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public float mouseSentivity = 0.5f;
     public float speed = 0.0f;
     public float accelerationIntensity = 1.0f;
+    public float jumpAmount = 35.0f;
+    public float gravityScale = 10.0f;
     
     private Rigidbody rb;
     private Vector2 moveInput = new Vector2(0, 0);
@@ -29,6 +31,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 lookInput = new Vector2(0, 0);
     private float cameraVerticalAngle = 0;
 
+    private Boolean isJumping = false;
+    private Boolean startJump = false;
+    
      
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,21 +45,20 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // update horizontal and vertical view direction based on lookInput 
+        // TODO - using transform here, not physics, so leave it in Update?
         UpdateViewDirection();
-        HandleMoveInput();
     }
 
     void FixedUpdate()
     {
-        Move();
+        // apply additional gravity 
+        rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
+        // apply user input 
+        HandleJump();
+        HandleMovement();
     }
-    /*
-     * Update - OR use FixedUpdate
-     * Update is called once per frame
-     * FixedUpdate - when using rigidBody and physics, not implemented currently
-     * however, physics in Updatae is not a problem if you multiply with Time.deltaTime
-     * (In FixedUpdate Time.deltaTime is a constant, hence the 'fixed' update, so not necessary there)
-     */
+    
+    // ------ View directions methods -------
     void UpdateViewDirection()
     {
         // horizontal camera rotation - based on look input, around local Y axis
@@ -72,20 +76,9 @@ public class PlayerController : MonoBehaviour
             camera.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
         }
     }
-
-    void HandleMoveInput()
-    {  
-        // NOTE: moveInput is a Vector2 representing the 2d input of
-        // - the wasd or arrow buttons,
-        // - the movement joystick 
-
-        moveAxis = new Vector3(moveInput.x, 0, moveInput.y);
-        moveAxis = Vector3.ClampMagnitude(moveAxis, 1);
-    }
-
-   
     
-    void Move()
+    // ------ Move methods -------
+   void HandleMovement()
     {
         // NOTE 2: since we are working with RB and physics,
         // this method needs to be called by FixedUpdate instead of Update.
@@ -108,9 +101,13 @@ public class PlayerController : MonoBehaviour
         // move rigidbody
         rb.linearVelocity = playerVelocity;
     }
-  
-    Vector3 RetrieveWorldspaceMoveInput()
+   Vector3 RetrieveWorldspaceMoveInput()
     {
+        // NOTE: moveInput is a Vector2 representing the 2d input of
+        // - the wasd or arrow buttons,
+        // - the movement joystick 
+        moveAxis = new Vector3(moveInput.x, 0, moveInput.y);
+        moveAxis = Vector3.ClampMagnitude(moveAxis, 1);
         // only consider camera’s horizontal rotation (yaw)
         Vector3 forward = transform.forward;
         forward.y = 0f;
@@ -122,6 +119,37 @@ public class PlayerController : MonoBehaviour
         
         return forward * moveAxis.z + right * moveAxis.x;
     }
+   
+    // ------ Jump methods ------- 
+    private void HandleJump()
+    {
+        if (startJump)
+        {
+            print("STARTING JUMP");
+            // TODO - trigger jump sound
+            rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
+            startJump = false;
+            isJumping = true;
+        } else if (isJumping)
+        {
+            // TODO - did we end the jump? 
+            // Are we still jumping - acceleration of jump can come here 
+        }
+        
+    }
+   
+   // ========================================
+   // ================ LISTENERS ============
+   void OnCollisionEnter(Collision collision)
+   {
+       if (collision.gameObject.tag == "WalkableSurface")
+       {
+           isJumping = false;
+           // TODO trigger landing sound
+       }
+   }
+
+    
     
     // ------ InputSystem methods ------- 
     void OnMove (InputValue movementValue)
@@ -133,7 +161,14 @@ public class PlayerController : MonoBehaviour
     {
         lookInput = lookValue.Get<Vector2>();
     }
-    
+
+    void OnJump(InputValue jumpValue)
+    {
+        if (jumpValue.isPressed)
+        {
+            if(isJumping == false) startJump = true; 
+        }
+    }
     // TODO - OnSprint, OnInteract, OnJump, OnAttack, ...  
 
 }
