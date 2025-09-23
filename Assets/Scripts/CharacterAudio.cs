@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CharacterAudio : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class CharacterAudio : MonoBehaviour
     [Tooltip("AudioClip played when landing")] 
     public AudioClip sfxLand;
     
-    public AudioSource audioSource;
+    public AudioSource audioSourceFootsteps;    
+    public AudioSource audioSourceOneShots;
    
     void Start()
     {
@@ -22,16 +24,16 @@ public class CharacterAudio : MonoBehaviour
 
     public void PlayJump()
     {
-       audioSource.PlayOneShot(sfxJump);
+       audioSourceOneShots.PlayOneShot(sfxJump);
     }
     
     public void PlayLand()
     {
-        audioSource.PlayOneShot(sfxLand);
+        audioSourceOneShots.PlayOneShot(sfxLand);
     }
 
     public void PlayFootstep()
     {
-        audioSource.PlayOneShot(sfxFootsteps);
+        audioSourceFootsteps.Play();
     }
 }

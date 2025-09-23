@@ -12,6 +12,7 @@ using UnityEngine.InputSystem;
  * over op werken met velocity en dan voetstappen --> randomized sound container, zodat we verschillende samples --> snelheid
  */
 
+// NOTE: player footsteps audio clips from freesound.org made by TechspiredMinds. Thanks! 
 
 
 
