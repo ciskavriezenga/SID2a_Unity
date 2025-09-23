@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public float accelerationIntensity = 1.0f;
     public float jumpAmount = 35.0f;
     public float gravityScale = 10.0f;
-    
+    public float footstepDistance = 0.5f;
     
     
     private Rigidbody rb;
@@ -37,8 +37,8 @@ public class PlayerController : MonoBehaviour
 
     private Boolean isJumping = false;
     private Boolean startJump = false;
-    
-    private 
+
+    private float footstepDistanceCounter = 0;    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -93,15 +93,17 @@ public class PlayerController : MonoBehaviour
         // calculate new velocity 
         Vector3 targetVelocity = worldspaceMoveInput * speed;
         Vector3 playerVelocity = rb.linearVelocity;
-#if False
+#if True
         // by applying linear interpolation with Lerp each frame --> exponentional curve
         //
         playerVelocity = Vector3.Lerp(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
 #else
         // linear progression by maxDistanceDelta, third parameter of MoveTowards
         playerVelocity = Vector3.MoveTowards(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
+        // rb.MovePosition(rb.position + (worldspaceMoveInput * speed * Time.fixedDeltaTime));
 #endif
-        rb.MovePosition(rb.position + (worldspaceMoveInput * speed * Time.fixedDeltaTime));
+        
+        UpdateFootstepDistance(playerVelocity);
         // move rigidbody
         rb.linearVelocity = playerVelocity;
     }
@@ -121,7 +123,20 @@ public class PlayerController : MonoBehaviour
         right.y = 0f;
         right.Normalize();
         
-        return forward * moveAxis.z + right * moveAxis.x;
+        Vector3 forwardMovement = forward * moveAxis.z;
+        
+        return forwardMovement + right * moveAxis.x;
+    }
+
+    private void UpdateFootstepDistance(Vector3 playerVelocity)
+    {
+        footstepDistanceCounter += playerVelocity.magnitude * Time.fixedDeltaTime;
+        if (footstepDistanceCounter >= footstepDistance)
+        {
+            // play audio and wrap distance back to zero to prevent deviations
+            characterAudio.PlayFootstep();
+            footstepDistanceCounter -= footstepDistance;
+        }
     }
    
     // ------ Jump methods ------- 

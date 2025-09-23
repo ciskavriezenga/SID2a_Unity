@@ -410,7 +410,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -908,6 +908,7 @@ MonoBehaviour:
   accelerationIntensity: 20
   jumpAmount: 70
   gravityScale: 10
+  footstepDistance: 7.5
 --- !u!114 &1230757306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,7 +1100,7 @@ Transform:
   m_GameObject: {fileID: 1230757304}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1146,7 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d801c2495454741858992f37c2b46c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxFootsteps: {fileID: 0}
+  sfxFootsteps: {fileID: 8300000, guid: 14ebb28bb97fb48f1b24fc373c3d05cd, type: 3}
   sfxJump: {fileID: 8300000, guid: 2a31e76e3be9e48eb893e06c4eb0af21, type: 3}
   sfxLand: {fileID: 8300000, guid: be231dbd708114252a07375f264b0fa9, type: 3}
   audioSource: {fileID: 280309279}

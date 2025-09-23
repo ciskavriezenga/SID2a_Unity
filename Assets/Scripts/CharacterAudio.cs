@@ -32,6 +32,6 @@ public class CharacterAudio : MonoBehaviour
 
     public void PlayFootstep()
     {
-        audioSource.PlayOneShot(sfxLand);
+        audioSource.PlayOneShot(sfxFootsteps);
     }
 }
