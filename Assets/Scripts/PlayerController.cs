@@ -94,9 +94,9 @@ public class PlayerController : MonoBehaviour
         // calculate new velocity 
         Vector3 targetVelocity = worldspaceMoveInput * speed;
         Vector3 playerVelocity = rb.linearVelocity;
-#if True
+
+#if TRUE
         // by applying linear interpolation with Lerp each frame --> exponentional curve
-        //
         playerVelocity = Vector3.Lerp(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
 #else
         // linear progression by maxDistanceDelta, third parameter of MoveTowards
@@ -131,12 +131,15 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateFootstepDistance(Vector3 playerVelocity)
     {
+        // remove vertical velocity axis
+        playerVelocity.y = 0; 
         footstepDistanceCounter += playerVelocity.magnitude * Time.fixedDeltaTime;
         if (footstepDistanceCounter >= footstepDistance)
         {
             // play audio and wrap distance back to zero to prevent deviations
             characterAudio.PlayFootstep();
             footstepDistanceCounter -= footstepDistance;
+            footstepDistanceCounter = 0;
         }
     }
    
@@ -145,7 +148,6 @@ public class PlayerController : MonoBehaviour
     {
         if (startJump)
         {
-            print("STARTING JUMP");
             characterAudio.PlayJump();
             rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
             startJump = false;

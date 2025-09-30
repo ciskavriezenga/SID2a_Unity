@@ -728,7 +728,7 @@ GameObject:
   - component: {fileID: 540752393}
   - component: {fileID: 540752392}
   m_Layer: 0
-  m_Name: Footsteps_AudioRandomContainer
+  m_Name: Footsteps_AudioSource
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1110,7 +1110,7 @@ GameObject:
   - component: {fileID: 1230757305}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1375,7 +1375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d801c2495454741858992f37c2b46c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxFootsteps: {fileID: 8300000, guid: 14ebb28bb97fb48f1b24fc373c3d05cd, type: 3}
   sfxJump: {fileID: 8300000, guid: 2a31e76e3be9e48eb893e06c4eb0af21, type: 3}
   sfxLand: {fileID: 8300000, guid: be231dbd708114252a07375f264b0fa9, type: 3}
   audioSourceFootsteps: {fileID: 540752392}

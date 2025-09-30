@@ -7,7 +7,7 @@ And add sound to jump and touching the ground?
 Think first: what do we need?
 - Know when the spacebar is pressed --> we use the InputSystem, this is easy
 - Trigger a jump when spacebar is pressed --> create a jump method in our Player script
-- Jump up let gravity `do it's job` :
+- Jump up let gravity _do it's job_ :
   - start jump, somehow (?) move upwards + trigger jump sample
   - disable jump when jumping
   - know when we `touch the ground` again + trigger landing sample
@@ -22,7 +22,7 @@ Multiple sources to consult, e.g.:
 
 However - some things to consider:
 - are the examples using the new input system? Use "Unity 6" in your search to ensure you focus on the latest Unity versions, might as well add "InputSystem" to search
-- is there a source that is written by Unity? By adding "unity learn" --> https://learn.unity.com/pathway/junior-programmer/unit/sound-and-effects/tutorial/lesson-3-1-jump-force-2, scrolling through it; no InputSystem in the code, so b e aware! This is an old tutorial. And - OnCollission is used for isGrounded check, hmm not what we want!
+- is there a source that is written by Unity? By adding "unity learn" --> https://learn.unity.com/pathway/junior-programmer/unit/sound-and-effects/tutorial/lesson-3-1-jump-force-2, scrolling through it; no InputSystem in the code, so be aware! This is an old tutorial. And - OnCollission is used for isGrounded check, hmm not what we want!
 
 Ok, let's recheck other sources. Text is preferred above video, so starting with  https://gamedevbeginner.com/how-to-jump-in-unity-with-or-without-physics/ Pretty good! Nice overview!
 - Many options!
