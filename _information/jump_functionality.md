@@ -1,4 +1,4 @@
-# Jump
+# Jump functionality
 
 ## First thoughts
 How to add a jump action to the player?

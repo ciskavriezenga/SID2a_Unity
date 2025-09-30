@@ -3,10 +3,10 @@
 ## Random container
 TODO@C- write short 'how to'
 
-## One shots & randomization
+## Single audio clip & randomization
 ### Randomized pitch shift
 Simply randomize the pitch of the audio source that is used to
-play the audio clip (either one clip or as a one shot) in your scipt as follow.
+play the audio clip (either as an assigned clip or as a one shot) in your scipt as follow.
 
 ```csharp
 audioSourceOneShotsRandomized.pitch = Random.Range(0.9f, 1.1f);
