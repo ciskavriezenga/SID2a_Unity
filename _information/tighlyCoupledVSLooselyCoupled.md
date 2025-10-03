@@ -11,5 +11,5 @@
 _Nonmodular code < 1 ---- 3 > Modular code_
 
 ## Loosely coupled
-Use events
-TODO@C
+1. Use events and separate playback class with playback functionality in unity.
+2. Use events and connect to fmod.
