@@ -139,7 +139,6 @@ public class PlayerController : MonoBehaviour
             // play audio and wrap distance back to zero to prevent deviations
             characterAudio.PlayFootstep();
             footstepDistanceCounter -= footstepDistance;
-            footstepDistanceCounter = 0;
         }
     }
    
