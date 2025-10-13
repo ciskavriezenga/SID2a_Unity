@@ -4,18 +4,19 @@ using UnityEngine.Serialization;
 public class CharacterAudio : MonoBehaviour
 {
     [Tooltip("AudioClip at start jump")]
-    public AudioClip sfxJump;
+    [SerializeField] private AudioClip sfxJump;
     
     [Tooltip("AudioClip played when landing")] 
-    public AudioClip sfxLand;
+    [SerializeField] private AudioClip sfxLand;
     
     // For a random container we need an audio source, thus using a seperate audio source for triggering the footsteps
-    public AudioSource audioSourceFootsteps;    
-    public AudioSource audioSourceOneShotsRandomized;
+    [SerializeField] private AudioSource audioSourceFootsteps;    
+    [SerializeField] private AudioSource audioSourceOneShotsRandomized;
 
-    public AudioLowPassFilter randomizedLPF;
-    public float randomLPFRangeLow = 1000.0f; 
-    public float randomLPFRangeHigh = 10000.0f; 
+    [SerializeField] private AudioLowPassFilter randomizedLPF;
+    [SerializeField] private float randomLPFRangeLow = 1000.0f; 
+    [SerializeField] private float randomLPFRangeHigh = 10000.0f;
+     
     
     public void PlayJump()
     {

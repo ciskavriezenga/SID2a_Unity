@@ -18,8 +18,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public Transform head;
-    public Camera camera;
+    public Transform head; 
+    public new Camera camera;
     public CharacterAudio characterAudio;
     
     public float mouseSentivity = 0.5f;
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent <Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
