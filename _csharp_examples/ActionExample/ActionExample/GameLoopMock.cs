@@ -11,12 +11,12 @@ public class GameLoopMock
     public GameLoopMock()
     {
         Console.WriteLine("GameLoopMock.constructor");
-        _isRunning = true;
         StartLoop();
     }
     
     private void StartLoop()
     {
+        _isRunning = true;
         Console.WriteLine("GameLoopMock.StartLoop");
         while (IsRunning)
         {
@@ -28,7 +28,9 @@ public class GameLoopMock
     private void Update()
     {
         Console.WriteLine($"GameLoopMock.Update - Counter: {_counter}, calling Jump");
+        // just for the sake of the example. 
         string exampleCharacterId = _counter % 2 == 0 ? "player" : "NPC_monster";
+        // working with strings, but should enums
         GameEvents.Jump(exampleCharacterId);
         
         _counter++;
