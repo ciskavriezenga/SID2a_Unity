@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
 
 /*
  * Tegen de cube muur oplopen --> triggered een geluid
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput = new Vector2(0, 0);
     private Vector2 lookInput = new Vector2(0, 0);
     private float cameraVerticalAngle = 0;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
