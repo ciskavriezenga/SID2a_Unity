@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class AudioPlayer : MonoBehaviour
 {
-    public AudioSource audioSourceButton;
+    public AudioSource audioSourceWallCollision;
 
-    public void PlayButtonSound()
+    public void PlayWallCollisionSound()
     {
-        audioSourceButton.Play();
+        audioSourceWallCollision.Play();
     }
 }
 

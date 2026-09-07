@@ -20,10 +20,14 @@ public class PlayerController : MonoBehaviour
     public float mouseSentivity = 0.5f;
     public float speed = 0;
     
+    public AudioPlayer audioPlayer;
+    
     private Rigidbody rb;
     private Vector2 moveInput = new Vector2(0, 0);
     private Vector2 lookInput = new Vector2(0, 0);
     private float cameraVerticalAngle = 0;
+    
+   
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -60,7 +64,7 @@ public class PlayerController : MonoBehaviour
             // vertical angle as a local rotation
             camera.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
         }
-        print(moveInput.y); 
+         
         
         // move character 
         transform.position += transform.forward * moveInput.y * speed * Time.deltaTime;
@@ -90,7 +94,7 @@ public class PlayerController : MonoBehaviour
          * Also see the PlayerCharacterController in the FPS_microgame_learning Unity tutorial project
          */
     }
-
+    
     void OnMove (InputValue movementValue)
     {
         moveInput = movementValue.Get<Vector2>();
@@ -106,4 +110,17 @@ public class PlayerController : MonoBehaviour
     
     // TODO - OnSprint, OnInteract, OnJump, OnAttack, ...  
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            CollisionWithWall();
+            audioPlayer.PlayWallCollisionSound();
+        }
+    }
+    void CollisionWithWall()
+    {
+        print("BOOM!");
+    }
+    
 }
