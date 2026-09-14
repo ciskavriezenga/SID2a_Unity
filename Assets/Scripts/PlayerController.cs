@@ -23,11 +23,11 @@ public class PlayerController : MonoBehaviour
     public CharacterAudio characterAudio;
     
     public float mouseSentivity = 0.5f;
-    public float speed = 0.0f;
-    public float accelerationIntensity = 1.0f;
-    public float jumpAmount = 35.0f;
+    public float speed = 40.0f;
+    public float accelerationIntensity = 20.0f;
+    public float jumpAmount = 70.0f;
     public float gravityScale = 10.0f;
-    public float footstepDistance = 2.0f;
+    public float footstepDistance = 7.5f;
     
     
     
@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // apply additional gravity 
+        // apply additional (!) gravity 
         rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
         // apply user input 
         HandleJump();
@@ -98,6 +98,8 @@ public class PlayerController : MonoBehaviour
         // calculate new velocity 
         Vector3 targetVelocity = worldspaceMoveInput * speed;
         Vector3 playerVelocity = rb.linearVelocity;
+        
+        // do not alter y - w a s d only affects x and z direction
         targetVelocity.y = playerVelocity.y;
         
 #if TRUE
