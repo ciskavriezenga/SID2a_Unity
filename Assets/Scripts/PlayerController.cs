@@ -20,11 +20,15 @@ public class PlayerController : MonoBehaviour
 {
     public Transform head;
     public Camera camera;
-    public float mouseSentivity = 0.5f;
-    public float speed = 0;
-    public float accelerationIntensity = 1.0f;
-    public float footstepDistance = 5.0f;
     public CharacterAudio characterAudio;
+    
+    public float mouseSentivity = 0.5f;
+    public float speed = 0.0f;
+    public float accelerationIntensity = 1.0f;
+    public float jumpAmount = 35.0f;
+    public float gravityScale = 10.0f;
+    public float footstepDistance = 2.0f;
+    
     
     
     private Rigidbody rb;
@@ -32,6 +36,10 @@ public class PlayerController : MonoBehaviour
     private Vector2 lookInput = new Vector2(0, 0);
     Vector3 moveAxis;
     private float cameraVerticalAngle = 0;
+    
+    private Boolean isJumping = false;
+    private Boolean startJump = false;
+
     
     private Vector3 traveledStepDistance = new Vector3(0, 0, 0);
     
@@ -52,16 +60,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // apply additional gravity 
+        rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
+        // apply user input 
+        HandleJump();
         HandleMovement();
     }
-    /*
-     * Update - OR use FixedUpdate
-     * Update is called once per frame
-     * FixedUpdate - when using rigidBody and physics, not implemented currently
-     * however, physics in Updatae is not a problem if you multiply with Time.deltaTime
-     * (In FixedUpdate Time.deltaTime is a constant, hence the 'fixed' update, so not necessary there)
-     */
-
+   
+    // ------ View directions methods -------
     void UpdateViewDirection()
     {
         // horizontal camera rotation - based on look input, around local Y axis
@@ -80,8 +86,8 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    
-    void HandleMovement()
+    // ------ Move methods -------
+   void HandleMovement()
     {
         // NOTE 2: since we are working with RB and physics,
         // this method needs to be called by FixedUpdate instead of Update.
@@ -91,10 +97,9 @@ public class PlayerController : MonoBehaviour
 
         // calculate new velocity 
         Vector3 targetVelocity = worldspaceMoveInput * speed;
-        
-        // retrieve current playerVelocity
         Vector3 playerVelocity = rb.linearVelocity;
-
+        targetVelocity.y = playerVelocity.y;
+        
 #if TRUE
         // by applying linear interpolation with Lerp each frame --> exponentional curve
         playerVelocity = Vector3.Lerp(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
@@ -103,6 +108,7 @@ public class PlayerController : MonoBehaviour
         playerVelocity = Vector3.MoveTowards(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
         // rb.MovePosition(rb.position + (worldspaceMoveInput * speed * Time.fixedDeltaTime));
 #endif
+        
         UpdateFootstepDistance(playerVelocity);
         // move rigidbody
         rb.linearVelocity = playerVelocity;
@@ -144,7 +150,43 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // ------ Jump methods ------- 
+    private void HandleJump()
+    {
+        if (startJump)
+        {
+            // TODO - Add audio 
+            rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
+            startJump = false;
+            isJumping = true;
+        } else if (isJumping)
+        {
+            // TODO - did we end the jump? 
+            // Are we still jumping - acceleration of jump can come here 
+        }
+        
+    }
     
+    // ========================================
+    // ================ LISTENERS ============
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "WalkableSurface")
+        {
+            if (isJumping)
+            {
+                isJumping = false;
+                // TODO - add 'landing sound' 
+            }
+        } else if (collision.gameObject.tag == "Wall")
+        {
+            characterAudio.PlayWallCollisionSound();
+        }
+    }
+
+    
+    
+    // ------ InputSystem methods ------- 
     void OnMove (InputValue movementValue)
     {
         moveInput = movementValue.Get<Vector2>();
@@ -157,21 +199,10 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputValue jumpValue)
     {
-        print("OnJump is called.");
-    }
-    // TODO - OnSprint, OnInteract, OnJump, OnAttack, ...  
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Wall")
+        if (jumpValue.isPressed)
         {
-            CollisionWithWall();
-            characterAudio.PlayWallCollisionSound();
+            if(!isJumping) startJump = true; 
         }
-    }
-    void CollisionWithWall()
-    {
-        print("BOOM!");
     }
     
 }
