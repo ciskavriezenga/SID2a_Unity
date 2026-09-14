@@ -1,7 +1,10 @@
 using System;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 /*
  * Tegen de cube muur oplopen --> triggered een geluid
@@ -20,14 +23,17 @@ public class PlayerController : MonoBehaviour
     public float mouseSentivity = 0.5f;
     public float speed = 0;
     public float accelerationIntensity = 1.0f;
-    
+    public float footstepDistance = 5.0f;
     public CharacterAudio characterAudio;
+    
     
     private Rigidbody rb;
     private Vector2 moveInput = new Vector2(0, 0);
     private Vector2 lookInput = new Vector2(0, 0);
     Vector3 moveAxis;
     private float cameraVerticalAngle = 0;
+    
+    private Vector3 traveledStepDistance = new Vector3(0, 0, 0);
     
    
     
@@ -85,6 +91,8 @@ public class PlayerController : MonoBehaviour
 
         // calculate new velocity 
         Vector3 targetVelocity = worldspaceMoveInput * speed;
+        
+        // retrieve current playerVelocity
         Vector3 playerVelocity = rb.linearVelocity;
 
 #if TRUE
@@ -95,11 +103,10 @@ public class PlayerController : MonoBehaviour
         playerVelocity = Vector3.MoveTowards(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
         // rb.MovePosition(rb.position + (worldspaceMoveInput * speed * Time.fixedDeltaTime));
 #endif
-        
+        UpdateFootstepDistance(playerVelocity);
         // move rigidbody
         rb.linearVelocity = playerVelocity;
     }
-
     
     
     Vector3 RetrieveWorldspaceMoveInput()
@@ -123,19 +130,35 @@ public class PlayerController : MonoBehaviour
         return forwardMovement + right * moveAxis.x;
     }
 
+
+    private void UpdateFootstepDistance(Vector3 playerVelocity)
+    {
+        // remove vertical velocity axis
+        playerVelocity.y = 0;
+        traveledStepDistance += playerVelocity * Time.fixedDeltaTime;
+        if (traveledStepDistance.magnitude >= footstepDistance)
+        {
+            // play audio and wrap distance back to zero to prevent deviations
+            characterAudio.PlayFootstepSound();
+            traveledStepDistance = new Vector3(0, 0, 0);
+        }
+    }
+
+    
     void OnMove (InputValue movementValue)
     {
         moveInput = movementValue.Get<Vector2>();
-        
-        // TODO - constrain moveInput to a maximum magnitude of 1
-        // moveInput = Vector3.ClampMagnitude(moveInput, 1);
     }
 
     void OnLook(InputValue lookValue)
     {
         lookInput = lookValue.Get<Vector2>();
     }
-    
+
+    void OnJump(InputValue jumpValue)
+    {
+        print("OnJump is called.");
+    }
     // TODO - OnSprint, OnInteract, OnJump, OnAttack, ...  
 
     void OnCollisionEnter(Collision collision)

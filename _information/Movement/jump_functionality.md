@@ -41,7 +41,7 @@ Ok, let's recheck other sources. Text is preferred above video, so starting with
       ```csharp
       // Snippet below is based on source https://gamedevbeginner.com/how-to-jump-in-unity-with-or-without-physics/, but already slightly altered
       // in Update track key press and set startJump to True
-      // in FixedUpdate
+      // in FixeddUpdate
       if (startJump)
       {
           rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
