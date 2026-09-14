@@ -792,7 +792,8 @@ MonoBehaviour:
   camera: {fileID: 961739752}
   mouseSentivity: 0.5
   speed: 10
-  audioPlayer: {fileID: 0}
+  accelerationIntensity: 1
+  characterAudio: {fileID: 1684419242}
 --- !u!114 &1230757306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1164,6 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6dae3c483b4a5da53c3fe4865c27e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  audioSourceWallCollision: {fileID: 2036792779}
 --- !u!4 &1684419243
 Transform:
   m_ObjectHideFlags: 0
