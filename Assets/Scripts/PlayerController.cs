@@ -19,12 +19,14 @@ public class PlayerController : MonoBehaviour
     public Camera camera;
     public float mouseSentivity = 0.5f;
     public float speed = 0;
+    public float accelerationIntensity = 1.0f;
     
-    public AudioPlayer audioPlayer;
+    public CharacterAudio characterAudio;
     
     private Rigidbody rb;
     private Vector2 moveInput = new Vector2(0, 0);
     private Vector2 lookInput = new Vector2(0, 0);
+    Vector3 moveAxis;
     private float cameraVerticalAngle = 0;
     
    
@@ -38,7 +40,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleCharacterMovement();
+        // update horizontal and vertical view direction based on lookInput
+        UpdateViewDirection();
+    }
+
+    private void FixedUpdate()
+    {
+        HandleMovement();
     }
     /*
      * Update - OR use FixedUpdate
@@ -46,9 +54,9 @@ public class PlayerController : MonoBehaviour
      * FixedUpdate - when using rigidBody and physics, not implemented currently
      * however, physics in Updatae is not a problem if you multiply with Time.deltaTime
      * (In FixedUpdate Time.deltaTime is a constant, hence the 'fixed' update, so not necessary there)
-     */ 
-    
-    void HandleCharacterMovement()
+     */
+
+    void UpdateViewDirection()
     {
         // horizontal camera rotation - based on look input, around local Y axis
         transform.Rotate(new Vector3(0f, lookInput.x * mouseSentivity, 0),Space.Self);
@@ -64,37 +72,57 @@ public class PlayerController : MonoBehaviour
             // vertical angle as a local rotation
             camera.transform.localEulerAngles = new Vector3(cameraVerticalAngle, 0, 0);
         }
-         
-        
-        // move character 
-        transform.position += transform.forward * moveInput.y * speed * Time.deltaTime;
-        transform.position += transform.right * moveInput.x * speed * Time.deltaTime;
-        
-        // TODO - check position in World and update music if required
-        // NOTE - use the position for this, can we retrieve on top of which plane we stand  
-        
-        
-        /*
-         * Another option is to transform the moveInput to worldSpace moveInput:
-         *      Vector3 worldspaceMoveInput = transform.TransformVector(moveInput)         
-         *
-         * Even more sofisticated is using a velocity, and using input to increase
-         * or the lack of input to decrease the velocity, e.g.:
-         *      Vector3 targetVelocity = worldspaceMoveInput * speed;
-         *      playerVelocity = Vector3.Lerp(playerVelocity, targetVelocity, accelerationIntensity * Time.deltaTime);
-         * whereby accelerationIntensity affects the player acceleration & deceleration, 
-         * low --> slowly, high --> quick
-         *
-         * and then add it to position, thus without the transform.forward but as 3D Vector
-         *
-         * TODO - try this out --> interesting to connect to sound of footsteps,
-         * since we can retrieve the magnitude of the velocity
-         * CharacterVelocity.magnitude
-         *
-         * Also see the PlayerCharacterController in the FPS_microgame_learning Unity tutorial project
-         */
     }
     
+    
+    void HandleMovement()
+    {
+        // NOTE 2: since we are working with RB and physics,
+        // this method needs to be called by FixedUpdate instead of Update.
+        
+        // transform the moveInput to worldspace so it is directed according to player's direction
+        Vector3 worldspaceMoveInput = RetrieveWorldspaceMoveInput();
+
+        // calculate new velocity 
+        Vector3 targetVelocity = worldspaceMoveInput * speed;
+        Vector3 playerVelocity = rb.linearVelocity;
+
+#if TRUE
+        // by applying linear interpolation with Lerp each frame --> exponentional curve
+        playerVelocity = Vector3.Lerp(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
+#else
+        // linear progression by maxDistanceDelta, third parameter of MoveTowards
+        playerVelocity = Vector3.MoveTowards(playerVelocity, targetVelocity, Time.fixedDeltaTime * accelerationIntensity);
+        // rb.MovePosition(rb.position + (worldspaceMoveInput * speed * Time.fixedDeltaTime));
+#endif
+        
+        // move rigidbody
+        rb.linearVelocity = playerVelocity;
+    }
+
+    
+    
+    Vector3 RetrieveWorldspaceMoveInput()
+    {
+        // NOTE: moveInput is a Vector2 representing the 2d input of
+        // - the wasd or arrow buttons,
+        // - the movement joystick 
+        moveAxis = new Vector3(moveInput.x, 0, moveInput.y);
+        moveAxis = Vector3.ClampMagnitude(moveAxis, 1);
+        // only consider camera’s horizontal rotation (yaw)
+        Vector3 forward = transform.forward;
+        forward.y = 0f;
+        forward.Normalize();
+        
+        Vector3 right = transform.right;
+        right.y = 0f;
+        right.Normalize();
+        
+        Vector3 forwardMovement = forward * moveAxis.z;
+        
+        return forwardMovement + right * moveAxis.x;
+    }
+
     void OnMove (InputValue movementValue)
     {
         moveInput = movementValue.Get<Vector2>();
@@ -115,7 +143,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             CollisionWithWall();
-            audioPlayer.PlayWallCollisionSound();
+            characterAudio.PlayWallCollisionSound();
         }
     }
     void CollisionWithWall()
