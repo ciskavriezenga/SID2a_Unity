@@ -1,0 +1,15 @@
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/bin/Debug/net9.0/ActionExample
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/bin/Debug/net9.0/ActionExample.deps.json
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/bin/Debug/net9.0/ActionExample.runtimeconfig.json
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/bin/Debug/net9.0/ActionExample.dll
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/bin/Debug/net9.0/ActionExample.pdb
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.AssemblyInfoInputs.cache
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.AssemblyInfo.cs
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.csproj.CoreCompileInputs.cache
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.sourcelink.json
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.dll
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/refint/ActionExample.dll
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.pdb
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ActionExample.genruntimeconfig.cache
+/Users/ciska/Documents/Unity/SID_makerSkill/_csharp_examples/ActionExample/ActionExample/obj/Debug/net9.0/ref/ActionExample.dll

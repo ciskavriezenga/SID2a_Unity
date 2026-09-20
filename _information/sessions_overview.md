@@ -5,6 +5,30 @@ Intro slides & hello bleep
 Adding bump into wall & jump
 
 # session 3
+X
+
+# session 4
 Footsteps
 Random container
-LFO, pitch -- randomness in code. 
+LFO, pitch -- randomness in code.
+
+```csharp
+Random.Range(low, high);
+lpf.cutoffFrequency(cutoffFreq);
+audioSource.pitch(pitch)
+```
+
+
+# session 6
+Reverb
+Play music based on location
+
+# Session 7
+?
+- classes
+- csharp events
+
+
+# Session 8
+?
+- scriptable objects unity
