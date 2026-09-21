@@ -147,7 +147,12 @@ public class PlayerController : MonoBehaviour
         if (traveledStepDistance.magnitude >= footstepDistance)
         {
             // play audio and wrap distance back to zero to prevent deviations
-            characterAudio.PlayFootstepSound();
+            if (playerVelocity.magnitude < 0.0f || playerVelocity.magnitude > 1.0f)
+            {
+                Debug.Log("Velocity magnitude is out of bounds: " + playerVelocity.magnitude);
+            }
+            
+            characterAudio.PlayFootstepSound(playerVelocity.magnitude);
             traveledStepDistance = new Vector3(0, 0, 0);
         }
     }

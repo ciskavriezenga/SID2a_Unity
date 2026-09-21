@@ -26,6 +26,7 @@ Play music based on location
 # Session 7
 ?
 - classes
+- tightly vs. loosely coupled code
 - csharp events
 
 
