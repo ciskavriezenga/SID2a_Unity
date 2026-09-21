@@ -20,7 +20,7 @@ audioSource.pitch(pitch)
 
 
 # session 6
-Reverb
+Reverb and mixer
 Play music based on location
 
 # Session 7
