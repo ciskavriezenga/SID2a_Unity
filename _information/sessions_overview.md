@@ -31,5 +31,3 @@ Play music based on location
 
 
 # Session 8
-?
-- scriptable objects unity

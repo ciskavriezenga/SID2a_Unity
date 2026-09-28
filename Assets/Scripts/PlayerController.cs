@@ -42,13 +42,14 @@ public class PlayerController : MonoBehaviour
 
     
     private Vector3 traveledStepDistance = new Vector3(0, 0, 0);
-    
-   
+
+    private string area = "";
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent <Rigidbody>();
+        // TODO - init area
     }
 
     // Update is called once per frame
@@ -114,6 +115,7 @@ public class PlayerController : MonoBehaviour
         UpdateFootstepDistance(playerVelocity);
         // move rigidbody
         rb.linearVelocity = playerVelocity;
+        
     }
     
     
@@ -149,7 +151,8 @@ public class PlayerController : MonoBehaviour
             // play audio and wrap distance back to zero to prevent deviations
             if (playerVelocity.magnitude < 0.0f || playerVelocity.magnitude > 1.0f)
             {
-                Debug.Log("Velocity magnitude is out of bounds: " + playerVelocity.magnitude);
+                // FIXME - velocity magnitude is out of bounds!!!
+               // Debug.Log("Velocity magnitude is out of bounds: " + playerVelocity.magnitude);
             }
             
             characterAudio.PlayFootstepSound(playerVelocity.magnitude);
@@ -166,11 +169,28 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpAmount, ForceMode.Impulse);
             startJump = false;
             isJumping = true;
+            characterAudio.PlayJumpStartSound();
         } else if (isJumping)
         {
-            // TODO - did we end the jump? 
-            // Are we still jumping - acceleration of jump can come here 
+            // still jumping, could be sonified 
         }
+        
+    }
+    
+    // ========================================
+    // ================ Area ============ 
+    private void UpdateArea(GameObject walkableSurface)
+    {
+        // TODO - add Area script to planes
+        // For now - we will check the plane names.
+        
+        // did the area change?
+        // TODO - for now we use the name as area and use a string to keep track of ares
+        if (area != walkableSurface.name)
+        {
+            //AudioPlayer  
+        }
+        
         
     }
     
@@ -183,8 +203,15 @@ public class PlayerController : MonoBehaviour
             if (isJumping)
             {
                 isJumping = false;
-                // TODO - add 'landing sound' 
+                characterAudio.PlayJumpEndSound();
             }
+
+            // TODO - use trigger zones instead of planes
+            //      --> create 3d plane above visible walkable surface
+            //      --> isTrigger - turn on, mesh renderer uit
+            //      --> set area
+            UpdateArea(collision.gameObject);
+
         } else if (collision.gameObject.tag == "Wall")
         {
             characterAudio.PlayWallCollisionSound();
