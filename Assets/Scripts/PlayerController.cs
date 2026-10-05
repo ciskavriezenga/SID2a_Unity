@@ -206,18 +206,17 @@ public class PlayerController : MonoBehaviour
                 characterAudio.PlayJumpEndSound();
             }
 
-            // TODO - use trigger zones instead of planes
-            //      --> create 3d plane above visible walkable surface
-            //      --> isTrigger - turn on, mesh renderer uit
-            //      --> set area
-            UpdateArea(collision.gameObject);
-
         } else if (collision.gameObject.tag == "Wall")
         {
             characterAudio.PlayWallCollisionSound();
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Collision get type returns: " + other.gameObject.GetType());
+        Debug.Log("Collider name: " + other.gameObject.name);
+    } 
     
     
     // ------ InputSystem methods ------- 
