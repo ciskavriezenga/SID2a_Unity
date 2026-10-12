@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0971a60265c34ca2b65f09c22882f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Area
-  areaType: 1
+  areaType: 2
 --- !u!65 &898354103
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1697,8 +1697,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   areaMusicList:
-  - area: 0
+  - areaType: 0
     musicClip: {fileID: 0}
+  - areaType: 1
+    musicClip: {fileID: 0}
+  - areaType: 2
+    musicClip: {fileID: 0}
+  - areaType: 0
+    musicClip: {fileID: 0}
+  audioSource1: {fileID: 0}
+  audioSource2: {fileID: 0}
 --- !u!4 &1542392476
 Transform:
   m_ObjectHideFlags: 0
@@ -1839,7 +1847,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0971a60265c34ca2b65f09c22882f04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Area
-  areaType: 1
+  areaType: 0
 --- !u!1 &1643243005
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,8 @@ private AreaType currentArea;
 public void UpdateArea(AreaType areaType)
 ```
 
-5. In PlayerController add the function `public void OnTriggerEnter(Collider other)` which updates the `currentArea` when relevant and then signals AudioManager, see next step.
+5. In PlayerController add the function `public void OnTriggerEnter(Collider other)`, which checks if the other collider was an Area and then calls areaManager.UpdateArea. In turn, when relevant areaManager then signals areaManager, see next step.
+
 
 6. Create an AudioManager, make it Serializable by adding the following code:
 ```

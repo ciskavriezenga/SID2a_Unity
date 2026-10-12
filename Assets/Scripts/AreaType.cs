@@ -1,7 +1,9 @@
 
 public enum AreaType
 {
-    Forest,
-    City,
-    Ocean
+    Forest, // 0 
+    City, // 1 
+    Ocean,  // 2
 }
+
+ 

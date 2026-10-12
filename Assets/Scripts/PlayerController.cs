@@ -212,11 +212,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider otherCollider)
     {
-        Debug.Log("Collision get type returns: " + other.gameObject.GetType());
-        Debug.Log("Collider name: " + other.gameObject.name);
-    } 
+        if(otherCollider.TryGetComponent<Area>(out Area area))
+        {
+            AreaManager.Instance.UpdateArea(area.areaType);
+        }
+    }
     
     
     // ------ InputSystem methods ------- 
